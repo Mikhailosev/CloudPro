@@ -1,7 +1,7 @@
 let targetNumber = Math.floor(Math.random() * 10) + 1;
-var attempts = 1;
+let attempts = 1;
 
-var submit = document.getElementById('submit'),
+let submit = document.getElementById('submit'),
    number = document.getElementById('guess'),
    input = document.getElementById('input'),
    text = document.getElementById('text'),
@@ -41,7 +41,7 @@ function showLoss() {
 }
 
 function removeform() {
-   var element = document.getElementById("input");
+   let element = document.getElementById("input");
    element.parentNode.removeChild(element);
 }
 
