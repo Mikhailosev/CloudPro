@@ -1,5 +1,5 @@
-var attempts = 1;
 let targetNumber = Math.floor(Math.random() * 10) + 1;
+var attempts = 1;
 
 var submit = document.getElementById('submit'),
    number = document.getElementById('guess'),
@@ -8,10 +8,10 @@ var submit = document.getElementById('submit'),
    replay = document.getElementById('replay');
 
 function init() {
-   submit.onclick= function(arg){
+   submit.onclick = function (arg) {
       arg.preventDefault();
       check(guess);
-    }
+   }
 }
 
 function check(input) {
@@ -26,18 +26,16 @@ function check(input) {
 
 function showWin(win) {
    text.innerHTML = win + ' WOW! You WON!';
-
    removeform()
 }
 
 function showError() {
-
    text.innerHTML = attempts + ' unsuccsessful attempts. Choose number from 1 to 10!';
-attempts++
+   attempts++
 }
 
 function showLoss() {
-   text.innerHTML ='You lose! The winning number was:'+targetNumber;
+   text.innerHTML = 'You lose! The winning number was:' + targetNumber;
    attempts++;
    removeform()
 }
