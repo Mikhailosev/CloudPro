@@ -28,7 +28,7 @@ var fiat = {
 		this.started = false;
 	},
 
-	drive: function() {
+	drive: (function() {
 		if (this.started) {
 			if (this.fuel > 0) {
 				console.log(this.make + " " +
@@ -41,16 +41,20 @@ var fiat = {
 		} else {
 			console.log("You need to start the engine first.");
 		}
+	}),
+	updateFuel(){
+		return fiat.fuel-=1;
 	},
 
-	addFuel: function(amount) {
-		this.fuel = this.fuel + amount;
+
+	addFuel: function() {
+		this.fuel = this.fuel-fiat.drive.updateFuel;
 	}
 };
-
+	
 fiat.start();
 fiat.drive();
-fiat.addFuel(2);
+fiat.addFuel();
 fiat.start();
 fiat.drive();
 fiat.drive();
