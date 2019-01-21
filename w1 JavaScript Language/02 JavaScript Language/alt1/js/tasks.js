@@ -41,6 +41,7 @@ function removeDuplicate(){
     let output = document.getElementById('output');
     message = '<h2>To-Do</h2><ol>'
     let filtered = tasks.filter(function(elem, index, self) {
+        return index == self.indexOf(elem);
     });
     for(let i=0; i<filtered.length;i++){
     message += '<li>' + filtered[i] + '</li>'
