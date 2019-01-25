@@ -10,6 +10,15 @@
 		map.onmousemove = showCoords;
 		var mydiv = document.getElementById("mydiv");
 		mydiv.onclick = addtext;
+		let ul=document.createElement("UL"); 
+		let but=document.createElement("BUTTON")
+		ul.innerHTML="i am a list";
+		document.body.appendChild(ul);
+		butins=document.createTextNode('Button № '+i);
+		for (i=1;i<10;i++){
+			but.appendChild(butins)
+			ul.appendChild(but)
+		}
 	}
 	
 	function showCoords(eventObj) {
@@ -34,5 +43,6 @@
 	<img id="map" src="data/map.jpg">
 	<p id="coords">Move mouse over map to find coordinates...</p>
 	<div id="mydiv" style="border:1px solid red">I am a DIV! Click me.</div>
+	<div id='lol'></div>
 </body>
 </html>

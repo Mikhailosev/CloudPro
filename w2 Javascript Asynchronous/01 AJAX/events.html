@@ -7,15 +7,32 @@
 	span {
 		cursor: pointer;
 	}
+	div{
+		margin: 200px;
+	}
   </style>
   <script>
 window.onload = function() {
 	var div = document.getElementById("clickme");
+	let div2=document.getElementById("clicking")
 	if (div.addEventListener) {
 		div.addEventListener("click", handleClick, false);
 	} else if (div.attachEvent) {
 		div.attachEvent("click", handleClick);
 	}
+	if (div2.addEventListener) {
+		div2.addEventListener("click", handleClick, false);
+	} else if (div.attachEvent) {
+		div2.attachEvent("click", handleClick);
+	}
+	if (div2.addEventListener) {
+		div2.addEventListener("mousemove", handleMove, false);
+	} else if (div.attachEvent) {
+		div2.attachEvent("mousemove", handleMove);
+	}
+	
+	
+	
 };
 
 function handleClick(e) {
@@ -29,9 +46,21 @@ function handleClick(e) {
 	alert("You clicked on " + target.id);
 }
 
+function handleMove(e) {
+	var evt = e || window.event;
+	var target;
+	if (evt.target) {
+		target = evt.target;
+	} else {
+		target = evt.srcElement;
+	}
+	alert("You moved mouse on " + target.id);
+	document.getElementById("clicking").removeEventListener("mousemove", handleMove);
+} 
   </script>
 </head>
 <body>
 <span id="clickme">Click me!</span>
+<div id="clicking">Some text</div>
 </body>
 </html>
