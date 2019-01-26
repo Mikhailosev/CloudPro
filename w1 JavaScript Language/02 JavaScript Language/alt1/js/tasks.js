@@ -48,6 +48,7 @@ function removeDuplicate(){
     }
     message += '</ol>';
     output.innerHTML = message;
+    tasks=filtered;
     return false;
 }
 
