@@ -1,41 +1,58 @@
 <html>
+
 <head>
-  <title>Component example</title>
-  <script src="https://unpkg.com/vue"></script>
-  
+    <title>Component example</title>
+    <script src="https://unpkg.com/vue"></script>
+
 </head>
+
 <body>
-<div id ="blog-post-demo" class="demo">
- <blog-post
-  v-for="post in posts"
-  v-bind:key="post.id"
-  v-bind:post="post.title"
-></blog-post>
-</div>
-<script type="text/javascript">
-Vue.component('blog-post', {
-  props: ['post'],
-  template: '<h3>{{ post.title }}</h3>'
-})
-new Vue({
-  el: '#blog-post-demo',
-  data: {
-    posts: [  ]
-  },
-  created: function () {
-    // Alias the component instance as `vm`, so that we  
-    // can access it inside the promise function
-    var vm = this
-    // Fetch our array of posts from an API
-    fetch('https://jsonplaceholder.typicode.com/posts')
-      .then(function (response) {
-        return response.json()
-      })
-      .then(function (data) {
-        vm.posts = data
-      })
-  }
-})
-   </script>
-  </body>
+    <div id="blog-post-demo" class="demo">
+        <blog-post v-for="post in posts" v-bind:key="post.id" v-bind:post="post" v-bind:writer="users[post.userId-1]"></blog-post>
+    </div>
+    <script type="text/javascript">
+        Vue.component('blog-post', {
+            props: ['post', 'writer'],
+            template: '<section style="padding:20px;"><h3>{{ post. title}}</h3>' +
+                '<pre>{{post.body}}</pre>' +
+                '<label>Author:</label>' +
+                '<div>{{writer.name}}</div>' +
+                '<div>{{writer.address.city}}</div>' +
+                '<div>{{writer.address.street}}</div>' +
+                '<div>{{writer.address.suite}}</div>' +
+                '<div>{{writer.address.zipcode}}</div>' +
+                '</section>'
+
+
+        })
+        new Vue({
+            el: '#blog-post-demo',
+            data: {
+                posts: [],
+                users: []
+            },
+            created: function() {
+                // Alias the component instance as `vm`, so that we  
+                // can access it inside the promise function
+                var vm = this
+                    // Fetch our array of posts from an API
+                fetch('https://jsonplaceholder.typicode.com/posts')
+                    .then(function(response) {
+                        return response.json()
+                    })
+                    .then(function(data) {
+                        vm.posts = data
+                    })
+                fetch('https://jsonplaceholder.typicode.com/users')
+                    .then(function(response) {
+                        return response.json()
+                    })
+                    .then(function(data) {
+                        vm.users = data
+                    })
+            }
+        })
+    </script>
+</body>
+
 </html>
