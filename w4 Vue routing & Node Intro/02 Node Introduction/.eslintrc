@@ -1,11 +1,13 @@
 {
-	"env": {
-		"node": true,
-		"jasmine": true
-	},
-	"rules": {
-		"indent": [2, "tab"],
-		"quotes": [2, "single"],
-		"semi": [2, "never"]
-	}
+    "env": {
+        "node": true,
+        "jasmine": true,
+        "es6": true
+    },
+    "rules": {
+        "indent": [2, "tab"],
+        "quotes": [2, "single"],
+        "semi": [2, "never"],
+        "ecmaVersion": 2017
+    }
 }
