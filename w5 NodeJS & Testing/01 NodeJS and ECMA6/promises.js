@@ -1,6 +1,7 @@
 
 /* Exploring ECMA6 promise chains and arrow functions */
 "use strict"
+process.env.DEBUG = 'flint'
 
 const stdin = process.openStdin()
 
