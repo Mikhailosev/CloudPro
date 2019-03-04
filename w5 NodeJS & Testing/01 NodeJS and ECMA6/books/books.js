@@ -1,5 +1,3 @@
-
-
 var request = require('request')
 
 var bookList = []
@@ -43,7 +41,44 @@ exports.add = bookId => {
   //console.log(bookList.length)
   return 'book '+bookId+' added'
 }
-
-exports.bookCount = () => {
-  return bookList.length
+exports.delete = bookId => {
+    if (bookId==!bookId){
+        if (bookId.length != 12) {
+            /* this throws a user-defined exception. */
+            throw('bookId should be 12 character long')
+          }
+        throw('There is no book with the id of '+bookId+'!')
+    }
+    if (bookList.indexOf(bookId)==-1){
+        throw('There is no book with the id of '+bookId+'!')
+    }
+    bookList.splice(bookList.indexOf(bookId),1)
+    return 'book '+bookId+' deleted'
 }
+exports.describe = (query, callback) => {
+    if (typeof query !== 'string' || query.length === 0) {
+      callback(new Error('missing query parameter'))
+    }
+    const url = 'https://www.googleapis.com/books/v1/volumes?q='+bookList.bookId
+    const query_string = {q: query, maxResults: 3, fields: 'items(id,volumeInfo(description))'}
+    request.get({url: url, qs: query_string}, (err, res, body) => {
+      if (err) {
+        callback(new Error('error making google books request'))
+      }
+      const json = JSON.parse(body)
+      const items = json.items
+      if (items === undefined) {
+        //console.log('found undefined property')
+        callback(new Error('no books found matching search'))
+        return
+      }
+      const books = items.map( element => {
+        return {id:element.id, description:element.volumeInfo.description}
+      })
+      /* the first callback parameter is the error, which in this case will be null, the second parameter is the data returned. */
+      callback(null, books)
+    })
+  }
+  
+exports.bookCount = () => {
+  return bookList.length}

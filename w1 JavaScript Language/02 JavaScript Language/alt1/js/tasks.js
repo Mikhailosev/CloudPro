@@ -3,7 +3,6 @@
 
 // Need a global variable:
 var tasks = []; 
-
 // Function called when the form is submitted.
 // Function adds a task to the global array.
 function addTask() {
@@ -38,9 +37,25 @@ function addTask() {
     
 } // End of addTask() function.
 
+function removeDuplicate(){
+    let output = document.getElementById('output');
+    message = '<h2>To-Do</h2><ol>'
+    let filtered = tasks.filter(function(elem, index, self) {
+        return index == self.indexOf(elem);
+    });
+    for(let i=0; i<filtered.length;i++){
+    message += '<li>' + filtered[i] + '</li>'
+    }
+    message += '</ol>';
+    output.innerHTML = message;
+    tasks=filtered;
+    return false;
+}
+
 // Initial setup:
 function init() {
     'use strict';
-    document.getElementById('theForm').onsubmit = addTask;
+    document.getElementById('submit').onclick = addTask;
+    document.getElementById('duplicate').onclick = removeDuplicate;
 } // End of init() function.
 window.onload = init;

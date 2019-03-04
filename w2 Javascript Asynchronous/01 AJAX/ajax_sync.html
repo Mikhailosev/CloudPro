@@ -1,38 +1,76 @@
-
 <!DOCTYPE html>
 <html>
+
 <head>
-  <title>AJAX test</title>
+    <title>AJAX test</title>
 </head>
+
 <body>
-  <div class="network-fake">
-    <label><input type="checkbox"> Fake network delay</label>
-  </div>
-  <div class="story"></div>
-  <svg class="spinner" viewBox="0 0 100 100" width="20" height="20">
+    <div class="network-fake">
+        <label><input type="checkbox"> Fake network delay</label>
+    </div>
+    <div class="story"></div>
+    <svg class="spinner" viewBox="0 0 100 100" width="20" height="20">
     <circle cx="50" cy="50" r="42" transform="rotate(-90,50,50)" />
   </svg>
 
-  <script src="js/ajax_utils.js"></script>
-  <script>
-    try {
-      // Use Github Gist when no web server is available
-      // var story = getJsonSync('https://gist.githubusercontent.com/c0lin/571d38b984d41b44aacf/raw/story.json');
-      var story = getJsonSync('data/story.json');
-      addHtmlToPage(story.heading);
+    <script src="js/ajax_utils.js"></script>
+    <script>
+        try {
+            // Use Github Gist when no web server is available
+            // var story = getJsonSync('https://gist.githubusercontent.com/c0lin/571d38b984d41b44aacf/raw/story.json');
+            var story = getJsonSync('data/story.json');
+            addHtmlToPage(story.heading);
 
-      story.chapterUrls.forEach(function(chapterUrl) {
-        var chapter = getJsonSync('data/'+chapterUrl); // remove the 'data/' part if using gist
-        addHtmlToPage(chapter.html);
-      });
+            story.chapterUrls.forEach(function(chapterUrl) {
+                var chapter = getJsonSync('data/' + chapterUrl); // remove the 'data/' part if using gist
+                addHtmlToPage(chapter.html);
+            });
 
-      addTextToPage("All done");
-    }
-    catch (err) {
-      addTextToPage("Argh, broken: " + err.message);
-    }
+            addTextToPage("All done");
+        } catch (err) {
+            addTextToPage("Argh, broken: " + err.message);
+        }
 
-    document.querySelector('.spinner').style.display = 'none';
-  </script>
+        function get_selection() {
+            var txt = '';
+            if (window.getSelection) {
+                txt = window.getSelection();
+            } else if (document.getSelection) {
+                txt = document.getSelection();
+            } else if (document.selection) {
+                txt = document.selection.createRange().text;
+            }
+            console.log(txt);
+            return txt;
+        }
+
+
+        document.body.ondblclick = function(e) {
+            var t = get_selection();
+            console.log("lol")
+            callApi(t)
+
+        };
+
+        function callApi(txt) {
+            let request = new XMLHttpRequest();
+            request.open('GET', 'https://api.wordnik.com/v4/word.json/' + txt + '/definitions?limit=1&includeRelated=false&useCanonical=false&includeTags=false&api_key=ebdb9a721a221f6fcd52a14b18b0f2dc382710d0ae47c8814');
+            request.send();
+            request.onreadystatechange = function() {
+                if (request.readyState === 4) {
+                    if (request.status === 200) {
+                        console.log(request.responseText)
+                        alert(JSON.parse(request.responseText)[0].text);
+                    } else {
+                        alert('There was a problem with the request.');
+                    }
+                }
+            }
+        }
+        document.querySelector('.spinner').style.display = 'none';
+        addTextToPage("Hi from the end of the code");
+    </script>
 </body>
+
 </html>

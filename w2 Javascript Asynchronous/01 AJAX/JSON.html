@@ -1,25 +1,38 @@
 <!doctype html>
 <html>
+
 <head>
-  <meta charset="utf-8">
-  <title> JSON </title>
-  <script>
+    <meta charset="utf-8">
+    <title> JSON </title>
 
-var fidoString = '{ "name": "Fido", "breed": "Mixed", "weight": 38 }';
-var fido = JSON.parse(fidoString);
-console.log("We have made a dog out of a string! " + fido.name);
+    <script>
+        window.onload = function init() {
+            var fidoString = '{ "name": "Fido", "breed": "Mixed", "weight": 38 }';
+            var fido = JSON.parse(fidoString);
+            console.log("We have made a dog out of a string! " + fido.name);
+            let newObj = {
+                'breed': {
+                    "latin": "Boidae",
+                    "swedish": "Jätteorm"
+                },
+                "sound": "none"
+            }
+            let myString = JSON.stringify(newObj)
+            document.getElementById("string").innerHTML = myString;
+            var fido2 = {
+                name: "Fido",
+                breed: "Mixed",
+                weight: 38
+            };
 
-
-var fido2 = {
-	name: "Fido",
-	breed: "Mixed",
-	weight: 38
-};
-var fidoString = JSON.stringify(fido2);
-console.log("We made a string from a dog! " + fidoString);
-
-  </script>
+            var fidoString = JSON.stringify(fido2);
+            console.log("We made a string from a dog! " + fidoString);
+        }
+    </script>
 </head>
+
 <body>
+    <div id="string"></div>
 </body>
+
 </html>

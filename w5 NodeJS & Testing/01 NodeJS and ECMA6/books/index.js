@@ -32,4 +32,29 @@ input.on('data', chunk => {
       console.log('the list contains '+books.bookCount()+' books')
     }
   }
+  if (text.indexOf('delete')===0){
+      console.log('deleting"'+item+'"')
+      try {
+          const result = books.delete(item)
+          console.log(result)
+      }
+      catch (err){
+      console.log(err)
+      }
+      finally {
+          console.log('the list contains '+books.bookCount()+'books')
+      }
+  }
+  if (text.indexOf('describe') === 0) {
+    console.log('describing  "'+item+'"')
+    /* Notice how the callback takes two parameters, an error and the data where a non-null error parameter indicates an error has ocurred. */
+    books.describe(item, (err, data) => {
+      if (err) {
+        /* the message property contains the string passed to the error object. */
+        console.log(err.message)
+        return
+      }
+      console.log(JSON.stringify(data, null, 2))
+    })
+  }
 })
