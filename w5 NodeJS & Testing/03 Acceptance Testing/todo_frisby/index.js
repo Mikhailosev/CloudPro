@@ -68,6 +68,13 @@ server.put('/lists/:listID', function(req, res) {
 	res.send(data.code, {status: data.status, message: 'this should update the specified resource'})
 	res.end()
 })
+server.del('/lists', function(req, res) {
+const auth = req.authorization
+const data = lists.delete(auth)
+res.setHeader('content-type', 'application/json')
+res.send(data.code, data.response)
+res.end()
+})
 
 /* The DELETE method removes the resource at the specified URL. */
 server.del('/lists/:listID', function(req, res) {
@@ -75,6 +82,7 @@ server.del('/lists/:listID', function(req, res) {
 	res.send(data.code, {status: data.status, message: 'this should delete the specified resource'})
 	res.end()
 })
+
 
 const port = process.env.PORT || 8081;
 
@@ -85,5 +93,4 @@ const port = process.env.PORT || 8081;
 		console.log('Mita ihmetta! App is ready at : ' + port)
 	}
 })*/
-
 module.exports = server.listen(8081);

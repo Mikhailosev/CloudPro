@@ -116,3 +116,22 @@ exports.addNew = function(auth, body) {
   /* And return a success code. */
   return {code: 201, contentType:'application/json', response:{ status:'success', message:'new list added', data: newList }}
 }
+exports.delete = function(auth) {
+console.log("delete")
+if (auth.basic === undefined) {
+console.log('missing basic auth')
+return {code: 401, contentType:'application/json', response:{ status:'error', message:'missing basic auth' }}
+}
+console.log("A")
+/* In this simple example we have hard-coded the username and password. You should be storing this somewhere are looking it up. */
+if (auth.basic.username !== 'testuser' || auth.basic.password !== 'p455w0rd') {
+console.log('invalid credentials')
+return {code: 401, contentType:'application/json', response:{ status:'error', message:'invalid credentials' }}
+}
+console.log("LISTS", lists)
+console.log("B")
+lists.forEach(function(dict) {
+lists.splice(lists.indexOf(dict),1)
+})
+return {code: 201, contentType:'application/json', response:{ status:'success', message:'list deleted', count: lists.length}}
+}

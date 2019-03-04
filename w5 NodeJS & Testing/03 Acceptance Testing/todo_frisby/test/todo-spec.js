@@ -7,6 +7,14 @@ frisby.globalSetup({
     headers: {'Authorization': 'Basic dGVzdHVzZXI6cDQ1NXcwcmQ=','Content-Type': 'application/json'}
   }
 })
+frisby.create('delete the list')
+.delete('http://localhost:8081/lists')
+.expectStatus(201)
+.afterJSON( json => {
+expect(json.status).toMatch('success')
+expect(json.message).toContain('list deleted')
+expect(json.count).toEqual(0)
+}).toss()
 
 /* here is a simple automated API call making a GET request. We check the response code, one of the response headers and the content of the response body. After completing the test we call 'toss()' which moves the script to the next test. */
 frisby.create('get empty list')
