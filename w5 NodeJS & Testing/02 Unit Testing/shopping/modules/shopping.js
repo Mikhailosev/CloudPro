@@ -70,7 +70,7 @@ exports.removeItem = item => {
 /** Decrements the quantity of an item in the list. */
 exports.decrement = (item, count) => {
 	console.log(arguments)
-	if (item === undefined || count === undefined) {
+	if (item === undefined || item === undefined) {
 		throw new Error('function requires two parameters')
 	}
 	if (data.get(item) === undefined) {

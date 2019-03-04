@@ -57,6 +57,13 @@ describe('Shopping List', function () {
 		const items = list.getAll()
 		expect(items[0].title).toBe('butter')
 	})
+	// test if string is not 0
+		it('should delete first item', () => {
+		list.addItem('bread')
+		expect(list.count()).toBe(1)
+		const items = list.getAll()
+		expect(items[0].title).toBe('butter')
+	})
 
 	it('should delete last item', () => {
 		list.removeItem('butter')
@@ -73,5 +80,30 @@ describe('Shopping List', function () {
 			expect(err.message).toBe('item not in list')
 		}
 	})
-
+		it('should throw error if item notz', () => {
+		try {
+			list.decrement('cheese', 2)
+			expect(true).toBe(false)
+		} catch(err) {
+expect(err.message).toBe('item not in the list')
+		}
+	})
+	it('should throw an error f second parameter is a string', ()=>
+	{
+		try{
+			list.decrement('bread', 'two')
+			expect(true).toBe(true)
+		}
+		catch(err) {
+			expect(err.message).toBe('second parameter should be a number')
+		}
+	})
+	it('should decrement item at all if current count < given one', () => {
+		list.decrement('bread', 3)
+		expect(list.count()).toBe(1)
+	})
+	it('should decrement item count if current count > given one', () => {
+		list.decrement('bread', 1)
+		expect(list.count()).toBe(2)
+	})
 })
