@@ -1,5 +1,7 @@
     var sync = require('sync-request');
 
+    var fs = require('fs')
+		const api = fs.readFileSync('/api.json', "utf8")
     var home
 
     exports.setHome = (location, callback) => {
@@ -20,7 +22,7 @@
 
     /* this function returns API data but the data won't vary between calls. We could get away without mocking this call. */
     function getLatLon(address) {
-    var url = 'https://maps.googleapis.com/maps/api/geocode/json?region=uk&key=AIzaSyDrAa8gRjrfAmVqR5AXfWpiV8DNmUD2Tkw&address=%27'
+    var url = 'https://maps.googleapis.com/maps/api/geocode/json?region=uk&key='+api+'&address=%27'
     var res = sync('GET', url+address)
     data = JSON.parse(res.getBody().toString('utf8'))
     console.log(data)
@@ -31,7 +33,7 @@
     /* this function also returns live API data but this data will vary continously based on time of day and traffic conditions. This means it will require mocking in tests. by storing the function in a private variable we can substitute for a different function when testing. Because we are replacing the code block it will never be called by our test suite so we flag the code coverage tool to ignore it. */
     /* istanbul ignore next */
     var getRouteData = function(start, end) {
-    var url = 'https://maps.googleapis.com/maps/api/directions/json?key=AIzaSyDrAa8gRjrfAmVqR5AXfWpiV8DNmUD2Tkw&origin=%27'
+    var url = 'https://maps.googleapis.com/maps/api/directions/json?key='+api+'&origin=%27'
     url = url+start+'&destination='+end
     console.log(url)
     const res = sync('GET', url)
